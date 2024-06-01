@@ -21,7 +21,7 @@ public class AnimalB : MonoBehaviour
     public float eatingRate = 0.5f; 
     public float sleepingRange = 0.3f;
     public float sleepingRate = 0.5f;
-
+    private Animator animator;
     private Vector3 wanderTarget;
     private float wanderTimer;
     public float wanderTime = 5.0f;
@@ -37,6 +37,9 @@ public class AnimalB : MonoBehaviour
         Hambre = UnityEngine.Random.Range(0, 0.25f);
         Sueño = UnityEngine.Random.Range(0, 0.25f);
         wanderTimer = wanderTime;
+        animator = GetComponent<Animator>();
+
+        
 
         minBounds = new Vector2(Mathf.Min(camaPosition.x, comederoPosition.x), Mathf.Min(camaPosition.y, comederoPosition.y));
         maxBounds = new Vector2(Mathf.Max(camaPosition.x, comederoPosition.x), Mathf.Max(camaPosition.y, comederoPosition.y));
@@ -75,6 +78,7 @@ public class AnimalB : MonoBehaviour
 
             if (Hambriento <= Hambreact * 0.5f)
             {
+                animator.SetBool("Eating", false);
                 isEating = false;
                 defecar = true;
             }
@@ -113,6 +117,7 @@ public class AnimalB : MonoBehaviour
             {
                 
                 Hambreact = Hambriento;
+                animator.SetBool("Eating", true);
                 comedero.GetComponent<Comedero>().comiendo();
                 isEating = true;
             }
